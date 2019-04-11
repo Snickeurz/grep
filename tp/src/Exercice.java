@@ -27,8 +27,8 @@ public class Exercice {
         while ((currentLine = br.readLine()) != null) {
             // Try to match current line
             matcher = pattern.matcher(currentLine);
-            if (matcher.matches()) {
-                System.out.println(String.format("New word found : %s", currentLine));
+            if (matcher.find()) {
+//                System.out.println(String.format("New word found : %s", currentLine));
                 counter++;
             }
         }
@@ -37,12 +37,26 @@ public class Exercice {
 
     public static void main(String[] args)
     {
-        String regexAuMoins5i = "([^i]*i){5}";
-        String regexOnly5i = "(.*i.*){5}";
+        // some regular expression to test
+        String regexAtLeast5i = "([^i]*i){5}";
+        String regexOnly5i = "^([^i]*i){5}[^i]*$";
+        String regexSubString = "gr[aio]s";
+        String regex3SameChar = "^(...).*\\1$";
+        String regexStartingAndFinishingBySameLetter = "^([mbp]).*\\1$";
+
+        // get file Absolute Path
         String filePath = "C:\\Users\\Nicol\\Desktop\\MIAGE\\M1 - MIAGE\\inf4\\grep\\tp\\src\\fr-dico.txt";
         try {
-            grep(regexAuMoins5i, filePath);
-//            grep(regexOnly5i, filePath);
+            System.out.println("Finding word with at least 5 'i'");
+            grep(regexAtLeast5i, filePath);
+            System.out.println("Finding word with only 5 'i'");
+            grep(regexOnly5i, filePath);
+            System.out.println("Finding word substring gras, gris or gros ");
+            grep(regexSubString, filePath);
+            System.out.println("Finding word starting and finishing with the same 3 characters (ex : anticoalugant <- ant)  ");
+            grep(regex3SameChar, filePath);
+            System.out.println("Finding word starting and finishing with the same letter (modem, baobab,..) ");
+            grep(regexStartingAndFinishingBySameLetter, filePath);
         } catch (FileNotFoundException e) {
             System.out.println("Error : File is not found !");
         } catch (IOException e) {
